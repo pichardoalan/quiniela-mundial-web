@@ -10,6 +10,7 @@ import ResumenEstadisticas from './ResumenEstadisticas';
 import { Trophy, CalendarDays, LogOut, ChevronDown, Plus, Home, Users, Lock } from 'lucide-react';
 import { supabase } from './supabase';
 import BracketEliminatorio from './BracketEliminatorio';
+import AdminPanel from './AdminPanel';
 
 export default function App() {
   const [usuarioActivo, setUsuarioActivo] = useState(null);
@@ -166,6 +167,10 @@ export default function App() {
             />
 
             <ResumenEstadisticas usuarioId={usuarioActivo.id} ligaId={ligaActiva.id} />
+            {/* PANEL MAESTRO INVISIBLE PARA LOS DEMÁS */}
+            {usuarioActivo.id === 'eb8798f7-d4d2-42f0-be6f-641fdf8dd13f' && (
+              <AdminPanel usuarioActualId={usuarioActivo.id} />
+            )}
 
             <button onClick={() => setVistaActiva('partidos')} className="w-full relative overflow-hidden bg-gradient-to-br from-blue-900/40 to-[#12151C] border border-blue-500/30 rounded-2xl p-6 flex flex-col items-start justify-center text-left hover:border-blue-500/60 transition-colors group mt-2">
               <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-all"></div>
