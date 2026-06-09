@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabase';
-import { Database, Loader2, CheckCircle, AlertTriangle, Edit3 } from 'lucide-react';
+import { AlertTriangle, Edit3 } from 'lucide-react';
 
 export default function AdminPanel({ usuarioActualId }) {
-  const [cargando, setCargando] = useState(false);
-  const [mensaje, setMensaje] = useState('');
-  
   // Estados para la actualización manual
   const [partidos, setPartidos] = useState([]);
   const [partidoSeleccionado, setPartidoSeleccionado] = useState('');
@@ -31,19 +28,10 @@ export default function AdminPanel({ usuarioActualId }) {
       <div className="bg-red-900/20 border border-red-500/50 rounded-2xl p-6 text-center mb-6">
         <AlertTriangle size={32} className="text-red-500 mx-auto mb-2" />
         <h2 className="text-red-500 font-black">ACCESO DENEGADO</h2>
-        <p className="text-xs text-red-400 mt-1">Esta área es exclusiva para Alan Pichardo.</p>
+        <p className="text-xs text-red-400 mt-1">Esta área es exclusiva para administradores del sistema.</p>
       </div>
     );
   }
-
-  // Sincronizador de la API
-  const descargarPartidos = async () => {
-    setCargando(true);
-    setMensaje('Conectando...');
-    // Simulando éxito para no borrar tus partidos actuales en las pruebas
-    setMensaje('¡ÉXITO! Calendario sincronizado (simulado).');
-    setCargando(false);
-  };
 
   // Actualizador Manual
   const actualizarResultadoManual = async (resultado) => {
@@ -73,21 +61,7 @@ export default function AdminPanel({ usuarioActualId }) {
 
   return (
     <div className="flex flex-col gap-4 mb-6">
-      {/* PANEL DE SINCRONIZACIÓN */}
-      <div className="bg-[#12151C] border border-blue-500/30 rounded-2xl p-6 flex flex-col items-center text-center">
-        <Database size={32} className="text-blue-500 mb-3" />
-        <h2 className="text-lg font-black text-white mb-2">Sincronizador Oficial</h2>
-        <button 
-          disabled={cargando}
-          onClick={descargarPartidos}
-          className="bg-blue-600 hover:bg-blue-500 text-white font-black text-sm px-6 py-3 rounded-xl flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
-        >
-          {cargando ? <Loader2 size={18} className="animate-spin" /> : 'DESCARGAR CALENDARIO API'}
-        </button>
-        {mensaje && <div className="mt-4 text-xs font-bold text-emerald-400">{mensaje}</div>}
-      </div>
-
-      {/* PANEL DE ACTUALIZACIÓN MANUAL (NUEVO) */}
+      {/* PANEL DE ACTUALIZACIÓN MANUAL */}
       <div className="bg-[#12151C] border border-purple-500/30 rounded-2xl p-6">
         <div className="flex items-center gap-2 mb-4">
           <Edit3 size={20} className="text-purple-500" />
