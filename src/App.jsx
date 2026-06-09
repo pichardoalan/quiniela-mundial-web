@@ -157,9 +157,11 @@ export default function App() {
             <ListaMiembros 
               ligaId={ligaActiva.id} 
               usuarioActualId={usuarioActivo.id} 
-              onLigaEliminada={() => {
+              onLigaEliminada={async () => {
+                setCargando(true);
                 setLigaActiva(null);
-                cargarLigasDelUsuario(usuarioActivo.id);
+                await cargarLigasDelUsuario(usuarioActivo.id);
+                setCargando(false);
               }}
             />
 
