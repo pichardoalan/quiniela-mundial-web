@@ -65,7 +65,8 @@ export default function Comunidad({ ligaId, partidos }) {
             // LA CORRECCIÓN DE ORO: Candado de Tiempo Real
             const ahora = new Date().getTime();
             const fechaPartido = new Date(partido.fecha).getTime();
-            const yaComenzo = ahora >= fechaPartido;
+            const tieneResultadoOficial = partido.resultado_real != null;
+            const yaComenzo = ahora >= fechaPartido || tieneResultadoOficial;
 
             return (
               <div key={partido.id} className="bg-[#12151C] border border-[#2A2E37] rounded-2xl overflow-hidden transition-all duration-300">
