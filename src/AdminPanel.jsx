@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabase';
-import { AlertTriangle, Edit3 } from 'lucide-react';
+import { AlertTriangle, Edit3, Database } from 'lucide-react';
 
 export default function AdminPanel({ usuarioActualId }) {
+  // Estados para el sincronizador de la API
+  const [cargando, setCargando] = useState(false);
+  const [mensaje, setMensaje] = useState('');
+
   // Estados para la actualización manual
   const [partidos, setPartidos] = useState([]);
   const [partidoSeleccionado, setPartidoSeleccionado] = useState('');
   const [cargandoManual, setCargandoManual] = useState(false);
   const [mensajeManual, setMensajeManual] = useState('');
 
-  // 🚨 REEMPLAZA ESTO CON TU ID DE SUPABASE 🚨
   const MI_ID_ADMIN = 'eb8798f7-d4d2-42f0-be6f-641fdf8dd13f';
 
   useEffect(() => {
@@ -32,6 +35,60 @@ export default function AdminPanel({ usuarioActualId }) {
       </div>
     );
   }
+
+  // NUEVO SINCRONIZADOR DE ELIMINATORIAS
+  const descargarEliminatoriasAPI = async () => {
+    setCargando(true);
+    setMensaje('Conectando a la API de Football-Data...');
+
+    try {
+      // 🚨 PON AQUÍ TU TOKEN DE LA API
+      const API_TOKEN = '3e4548b8f89e451da3a9352f77713c7e'; 
+      const respuesta = await fetch('/api-football/v4/competitions/2000/matches', {
+        headers: { 'X-Auth-Token': API_TOKEN }
+      });
+
+      const datos = await respuesta.json();
+
+      // Filtramos SOLO los partidos que NO sean de fase de grupos
+      const partidosEliminatoria = datos.matches.filter(
+        partido => partido.stage && partido.stage !== 'GROUP_STAGE'
+      );
+
+      if (partidosEliminatoria.length === 0) {
+        setMensaje('No se encontraron partidos de eliminatoria aún.');
+        setCargando(false);
+        return;
+      }
+
+      setMensaje(`Procesando ${partidosEliminatoria.length} partidos...`);
+
+      // Damos formato a los datos para que encajen en tu tabla de Supabase
+      const partidosFormateados = partidosEliminatoria.map(p => ({
+        id: p.id, 
+        local: p.homeTeam.tla || p.homeTeam.name || 'TBD',
+        visitante: p.awayTeam.tla || p.awayTeam.name || 'TBD',
+        logo_local: p.homeTeam.crest || 'https://via.placeholder.com/150',
+        logo_visitante: p.awayTeam.crest || 'https://via.placeholder.com/150',
+        fecha: p.utcDate,
+        fase: p.stage // Guardamos la fase (LAST_16, QUARTER_FINALS, etc.)
+      }));
+
+      const { error } = await supabase
+        .from('partidos')
+        .upsert(partidosFormateados);
+
+      if (error) throw error;
+
+      setMensaje('¡Éxito! Partidos de eliminatoria descargados.');
+      await cargarPartidos(); // Recargamos tu lista del panel manual
+
+    } catch (error) {
+      console.error(error);
+      setMensaje('Error al descargar: ' + error.message);
+    }
+    setCargando(false);
+  };
 
   // Actualizador Manual
   const actualizarResultadoManual = async (resultado) => {
@@ -61,6 +118,21 @@ export default function AdminPanel({ usuarioActualId }) {
 
   return (
     <div className="flex flex-col gap-4 mb-6">
+      
+      {/* BOTÓN DE SINCRONIZACIÓN DE ELIMINATORIAS */}
+      <div className="bg-[#12151C] border border-blue-500/30 rounded-2xl p-6 flex flex-col items-center text-center">
+        <Database size={24} className="text-blue-500 mb-3" />
+        <h2 className="text-sm font-black text-white mb-4">Fase Eliminatoria</h2>
+        <button 
+          disabled={cargando}
+          onClick={descargarEliminatoriasAPI}
+          className="bg-blue-600 hover:bg-blue-500 text-white font-black text-xs px-6 py-3 rounded-xl flex items-center justify-center transition-colors disabled:opacity-50 w-full"
+        >
+          {cargando ? 'Descargando...' : 'DESCARGAR OCTAVOS DE FINAL'}
+        </button>
+        {mensaje && <div className="mt-3 text-xs font-bold text-emerald-400">{mensaje}</div>}
+      </div>
+
       {/* PANEL DE ACTUALIZACIÓN MANUAL */}
       <div className="bg-[#12151C] border border-purple-500/30 rounded-2xl p-6">
         <div className="flex items-center gap-2 mb-4">

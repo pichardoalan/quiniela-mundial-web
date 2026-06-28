@@ -248,10 +248,6 @@ export default function App() {
             {/* MODO 2: BRACKET ELIMINATORIO */}
             {modoJuego === 'bracket' && (
               <div className="animate-fade-in">
-                <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 mb-4 text-center">
-                  <span className="text-blue-400 text-xs font-bold block mb-1">Las eliminatorias aún no comienzan</span>
-                  <span className="text-gray-400 text-[10px]">Las llaves de votación se habilitarán cuando finalice la fase de grupos.</span>
-                </div>
                 <BracketEliminatorio ligaId={ligaActiva.id} usuarioId={usuarioActivo.id} />
               </div>
             )}

@@ -6,14 +6,14 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [
     react(),
-    tailwindcss(), // <-- ¡Esto fue lo que borré por accidente!
+    tailwindcss(), 
   ],
   server: {
     proxy: {
-      '/api-futbol': {
+      '/api-football': {
         target: 'https://api.football-data.org',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api-futbol/, '')
+        rewrite: (path) => path.replace(/^\/api-football/, '')
       }
     }
   }
