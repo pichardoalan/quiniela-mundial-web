@@ -1,16 +1,30 @@
-# React + Vite
+# QUINIELA MUNDIAL WEB
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plataforma web interactiva desarrollada para la gestión y predicción de resultados deportivos durante el torneo mundialista México, Estados Unidos y Canadá
 
-Currently, two official plugins are available:
+> **Nota:** Este proyecto fue diseñado y ejecutado activamente durante el periodo del torneo. Actualmente se encuentra archivado como demostración de arquitectura y código
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+--
+## Tecnologías Utilizadas
 
-## React Compiler
+* **Frontend:** React /JavaScript (Vite)
+* **Backend:** Node.js (API REST personalizada)
+* **Base de Datos & Auth:** Supabase
+* **Estilos & UI:** CSS3 / HTML5
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+--
+## Características Principales
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* Interfaz dinámica para el registro y pronóstico de partidos.
+* Integración con backend para el cálculo de puntos y posiciones.
+* Autenticación de usuarios e integración de base de datos en tiempo real mediante Supabase.
+
+--
+## Configuración Local
+
+Si deseas ejecutar este proyecto en tu entorno local:
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone (https://github.com/pichardoalan/quiniela-mundial-web.git)
