@@ -62,7 +62,7 @@ export default function Comunidad({ ligaId, partidos }) {
             const votosVisitante = votosPartido.filter(v => v.voto === 'V');
             const expandido = partidoExpandido === partido.id;
             
-            // LA CORRECCIÓN DE ORO: Candado de Tiempo Real
+            // CANDADO DE TIEMPO
             const ahora = new Date().getTime();
             const fechaPartido = new Date(partido.fecha).getTime();
             const tieneResultadoOficial = partido.resultado_real != null;
@@ -118,7 +118,7 @@ export default function Comunidad({ ligaId, partidos }) {
                         </div>
                       </div>
                     ) : (
-                      /* Si NO ha comenzado, mostramos el escudo protector */
+                      /* Si NO ha comenzado,muestra texto de error */
                       <div className="flex flex-col items-center justify-center py-6 text-center bg-[#12151C] border border-[#2A2E37] rounded-xl">
                         <Clock size={28} className="text-blue-500 mb-2" />
                         <span className="text-sm font-black text-white">Partido Abierto</span>

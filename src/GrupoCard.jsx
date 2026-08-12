@@ -5,13 +5,12 @@ import PartidoCard from './PartidoCard';
 export default function GrupoCard({ nombreGrupo, partidos, usuarioId, ligaId }) {
   const [abierto, setAbierto] = useState(false);
 
-  // Truco matemático para extraer los nombres de los equipos sin que se repitan
   const equiposUnicos = [...new Set(partidos.flatMap(p => [p.local, p.visitante]))];
 
   return (
     <div className="mb-4 bg-[#12151C] border border-[#2A2E37] rounded-2xl overflow-hidden transition-all shadow-lg">
       
-      {/* CABECERA DEL GRUPO (El botón que abre/cierra) */}
+      {/* CABECERA DEL GRUPO */}
       <button
         onClick={() => setAbierto(!abierto)}
         className="w-full px-5 py-4 flex items-center justify-between bg-[#1A1D24] hover:bg-[#222831] transition-colors active:scale-[0.99]"

@@ -9,7 +9,6 @@ export default function Ranking({ ligaId, usuarioActualId }) {
 
   useEffect(() => {
     const cargarRanking = async () => {
-      // AQUÍ ESTÁ LA MAGIA: Obligamos a ordenar por puntos de mayor a menor
       const { data: rankingData, error } = await supabase
         .from('ranking_ligas')
         .select('*')

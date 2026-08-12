@@ -9,7 +9,6 @@ export default function BracketEliminatorio({ usuarioId, ligaId }) {
 
   useEffect(() => {
     const cargarDatos = async () => {
-      // 1. Buscamos usando la NUEVA columna 'fase'
       const { data: partidosData } = await supabase
         .from('partidos')
         .select('*')

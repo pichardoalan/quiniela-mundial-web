@@ -13,7 +13,6 @@ export default function Login() {
     <div className="min-h-screen bg-[#090B0E] flex flex-col items-center justify-center p-4 relative">
       <div className="flex flex-col items-center gap-6 max-w-sm w-full z-10">
         
-        {/* ÍCONO ACTUALIZADO: Trofeo en lugar de Fuego */}
         <div className="w-16 h-16 bg-[#12151C] border border-[#2A2E37] rounded-2xl flex items-center justify-center shadow-lg">
           <Trophy size={32} className="text-blue-500" />
         </div>
@@ -34,7 +33,7 @@ export default function Login() {
         </button>
       </div>
 
-      {/* CRÉDITO SUTIL */}
+      {/* CRÉDITO */}
       <div className="absolute bottom-8 w-full text-center opacity-30 pointer-events-none">
         <span className="text-[10px] text-white font-bold tracking-widest uppercase">
           by Alan Pichardo

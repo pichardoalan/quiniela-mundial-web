@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabase';
-import { Lock } from 'lucide-react'; // <-- Agregamos el ícono del candado
+import { Lock } from 'lucide-react';
 
 export default function PartidoCard({ partido, usuarioId, ligaId }) {
   const [prediccion, setPrediccion] = useState(null);
   const [guardando, setGuardando] = useState(false);
   const [cargado, setCargado] = useState(false);
-  const [partidoBloqueado, setPartidoBloqueado] = useState(false); // <-- Nuevo estado anti-trampas
+  const [partidoBloqueado, setPartidoBloqueado] = useState(false); 
 
-  // --- NUEVO EFECTO: CANDADO DE TIEMPO ---
   useEffect(() => {
     const verificarBloqueo = () => {
       if (!partido.fecha) return;
@@ -48,10 +47,10 @@ export default function PartidoCard({ partido, usuarioId, ligaId }) {
   // --- LÓGICA DE RESULTADOS Y BLOQUEO COMBINADO ---
   const yaTermino = partido.resultado_real != null;
   const acierto = yaTermino && prediccion === partido.resultado_real;
-  const estaTotalmenteBloqueado = yaTermino || partidoBloqueado; // <-- Candado maestro
+  const estaTotalmenteBloqueado = yaTermino || partidoBloqueado; 
 
   const manejarVoto = async (opcion) => {
-    if (guardando || estaTotalmenteBloqueado) return; // <-- Aplica el candado maestro
+    if (guardando || estaTotalmenteBloqueado) return; 
     setGuardando(true);
     
     const { data: existente } = await supabase
@@ -123,7 +122,6 @@ export default function PartidoCard({ partido, usuarioId, ligaId }) {
             <Lock size={10} /> Cerrado
           </span>
         ) : (
-          /* Las etiquetas originales que tú hiciste si el partido sigue abierto */
           <>
             {cargado && prediccion === null && (
               <span className="text-[9px] font-black text-emerald-500 uppercase tracking-widest animate-pulse flex items-center gap-1.5 bg-emerald-500/10 px-2 py-0.5 rounded-full">
@@ -139,10 +137,10 @@ export default function PartidoCard({ partido, usuarioId, ligaId }) {
         )}
       </div>
 
-      {/* ARENA DE COMBATE (Zonas de Votación) */}
+      {/* Zonas de Votación */}
       <div className={`flex items-stretch justify-between p-2 h-32 relative ${partidoBloqueado && !yaTermino ? 'opacity-70' : ''}`}>
         
-        {/* BOTÓN GIGANTE LOCAL */}
+        {/* BOTÓN LOCAL */}
         <button 
           disabled={guardando || estaTotalmenteBloqueado} 
           onClick={() => manejarVoto('L')} 
@@ -164,7 +162,7 @@ export default function PartidoCard({ partido, usuarioId, ligaId }) {
           <span className="text-[8px] font-bold text-gray-500 mt-1 uppercase tracking-widest bg-[#090B0E] px-1.5 rounded-sm">Empate</span>
         </div>
 
-        {/* BOTÓN GIGANTE VISITANTE */}
+        {/* BOTÓN VISITANTE */}
         <button 
           disabled={guardando || estaTotalmenteBloqueado} 
           onClick={() => manejarVoto('V')} 

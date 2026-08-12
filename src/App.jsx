@@ -167,7 +167,7 @@ export default function App() {
             />
 
             <ResumenEstadisticas usuarioId={usuarioActivo.id} ligaId={ligaActiva.id} />
-            {/* PANEL MAESTRO INVISIBLE PARA LOS DEMÁS */}
+            {/* PANEL VISIBLE UNICAMENTE PARA EL ADMINISTRADOR */}
             {usuarioActivo.id === 'eb8798f7-d4d2-42f0-be6f-641fdf8dd13f' && (
               <AdminPanel usuarioActualId={usuarioActivo.id} />
             )}
@@ -268,7 +268,7 @@ export default function App() {
           </div>
         )} 
 
-        {/* CRÉDITO SUTIL AL FINAL DEL CONTENIDO */}
+        {/* CRÉDITO */}
         <div className="w-full text-center pt-8 pb-4 opacity-30 pointer-events-none">
           <span className="text-[10px] text-white font-bold tracking-widest uppercase">
             by Alan Pichardo

@@ -60,7 +60,6 @@ export default function SelectorLiga({ usuarioId, onLigaSeleccionada, onCancelar
       return;
     }
 
-    // AQUÍ ESTÁ LA CORRECCIÓN: Agregamos rol: 'admin'
     const { error: errorUnion } = await supabase
       .from('miembros_liga')
       .insert({ liga_id: nuevaLiga.id, usuario_id: usuarioId, rol: 'admin' });
